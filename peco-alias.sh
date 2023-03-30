@@ -8,15 +8,12 @@ function peco-select-history() {
 zle -N peco-select-history
 bindkey '^r' peco-select-history
 
-# Select a working process and kill
-function peco-pkill() {
-  for pid in `ps aux | peco | awk '{ print $2 }'`
-  do
-    kill $pid
-    echo "Killed ${pid}"
-  done
+# kill specific port
+# example: pk 3000
+function pkill() {
+  kill -9 $(lsof -t -i :$1)
 }
-alias pk="peco-pkill"
+alias -g pk="pkill"
 
 # Change directory for ghq
 function pcd {
